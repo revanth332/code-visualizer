@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-primary-bg: #1e1e2e;       /* Main background (Dark Slate) */
+  --color-navbar-bg: #121212;        /* Navbar background (Almost Black) */
+  --color-text-primary: #d1d5db;     /* Light Gray text */
+  --color-accent: #bb86fc;           /* Soft Purple for accents */
+  --color-highlight: #03dac6;        /* Cyan for hover/secondary accents */
+  --color-code-bg: #1E1E1E;          /* Code editor background (Dracula) */
+  --color-code-keyword: #ff79c6;     /* Pink for keywords */
+  --color-code-string: #f1fa8c;      /* Yellow for strings */
+  --color-code-function: #50fa7b;    /* Green for functions */
+  --color-code-comment: #6272a4;     /* Dark grayish blue for comments */
+  --color-code-variable: #8be9fd;    /* Cyan for variables */
+  --color-react-flow-bg: #2d2d44;    /* React Flow diagram background (Dark Indigo) */
+  --color-node-bg: #3c3e58;          /* Muted Navy for node background */
+  --color-node-border: #8a85ff;      /* Light Purple for node borders */
+  --color-connection-line: #ff5555;  /* Soft Red for connection lines */
+}
