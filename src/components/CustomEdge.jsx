@@ -1,19 +1,18 @@
 import {
     BaseEdge,
     EdgeLabelRenderer,
-    getSmoothStepPath,
+    getStraightPath,
     useReactFlow,
   } from '@xyflow/react';
 import {  PlusIcon } from 'lucide-react';
   
-  export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY,source,target }) {
+  export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY,source,target,markerEnd,style }) {
     const { setEdges,setNodes } = useReactFlow();
-    const [edgePath, labelX, labelY] = getSmoothStepPath({
+    const [edgePath, labelX, labelY] = getStraightPath({
       sourceX,
       sourceY,
       targetX,
       targetY,
-      borderRadius: 20
     });
 
     const handleAddNode = () => {
@@ -24,7 +23,7 @@ import {  PlusIcon } from 'lucide-react';
   
     return (
       <>
-        <BaseEdge id={id} path={edgePath}/>
+        <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} />
         <EdgeLabelRenderer>
           <button
             style={{

@@ -11,6 +11,7 @@ import CustomEdge from './CustomEdge';
 import '@xyflow/react/dist/style.css';
 import CustomNode from './CustomNode';
 import { Loader2 } from 'lucide-react';
+import ConnectionLine from './ConnectionLine';
 
 
 const edgeTypes = {
@@ -30,7 +31,9 @@ function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGen
 
   const onConnect = useCallback(
     (connection) => {
-      const edge = { ...connection, type: 'customEdge' };
+      console.log(connection);
+      const edge = { ...connection, type: 'customEdge',markerEnd: {"type": "arrowclosed",width: 10,height: 10,color: '#fa7ab3'},
+      style: {strokeWidth: 2,stroke: '#fa7ab3',}};
       setEdges((eds) => addEdge(edge, eds));
     },
     [setEdges],
@@ -44,6 +47,7 @@ function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGen
     (event, connectionState) => {
       // when a connection is dropped on the pane it's not valid
       if (!connectionState.isValid) {
+        console.log(connectionState,event);
         // we need to remove the wrapper bounds, in order to get the correct position
         const id = getId();
         const { clientX, clientY } =
@@ -54,14 +58,16 @@ function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGen
             x: clientX,
             y: clientY,
           }),
-          data: { label: `Node ${id}` },
+          data: { label: `Node ${id}`,handlerTypes:{top : connectionState.fromPosition === "bottom" ? "target" : "source",left:connectionState.fromPosition === "right" ? "target" : "source",right:connectionState.fromPosition === "left" ? "target" : "source",bottom:connectionState.fromPosition === "top" ? "target" : "source"}},
           origin: [0.5, 0.0],
           type:"customNode"
         };
  
         setNodes((nds) => nds.concat(newNode));
         setEdges((eds) =>
-          eds.concat({ id, source: connectionState.fromNode.id, target: id,type:"customEdge" }),
+          eds.concat({ id, source: connectionState.fromNode.id,sourceHandle:connectionState.fromHandle.id,target: id,type:"customEdge",
+            markerEnd: {"type": "arrowclosed",width: 10,height: 10,color: '#fa7ab3'},
+            style: {strokeWidth: 2,stroke: '#fa7ab3',}}),
         );
       }
     },
@@ -84,6 +90,7 @@ function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGen
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onConnectEnd={onConnectEnd}
+            // connectionLineComponent={ConnectionLine}
             edgeTypes={edgeTypes}
             nodeTypes={nodeTypes}
             fitView

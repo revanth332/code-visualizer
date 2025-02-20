@@ -18,9 +18,11 @@ function CustomNode({id, data }) {
 
   return (
     <>
-      {
+      {/* {
         data?.isLoop ? <Handle type="target" position={Position.Left} /> : <Handle type="target" position={Position.Top} />
-      }
+      } */}
+
+      <Handle style={{background: '#fa7ab3'}} type={data.handlerTypes.left} position={Position.Left} id="leftHanlder" /> <Handle style={{background: '#fa7ab3'}} type={data.handlerTypes.top} position={Position.Top} id="topHanlder"/>
       <div className=' border-node-border text-text-primary rounded-lg min-w-[100px] text-center'>
         <div className='bg-node-bg rounded-t-lg flex items-center p-1'>
           <span className='bg-red-500 rounded-full h-2 w-2 inline-block mr-1'></span>
@@ -31,10 +33,10 @@ function CustomNode({id, data }) {
           <input value={nodeText} onChange={handleLabelChange} type="text" /> 
         </div>
       </div>
-      {
+      {/* {
         data?.isLoop ? <Handle type="source" position={Position.Right} id="a" /> : <Handle type="source" position={Position.Bottom} id="a" />
-      }
-      
+      } */}
+      <Handle style={{background: '#fa7ab3'}} type={data.handlerTypes.right} position={Position.Right} id="rightHandler" /> <Handle style={{background: '#fa7ab3'}} type={data.handlerTypes.bottom} position={Position.Bottom} id="bottomHandler" />
       {/* <Handle type="source" position={Position.Bottom} id="b" style={handleStyle} /> */}
     </>
   );

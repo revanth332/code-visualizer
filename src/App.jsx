@@ -12,6 +12,7 @@ import {
   Background 
 } from '@xyflow/react';
 import FlowDiagram from './components/Diagram';
+import '@xyflow/react/dist/style.css';
 
 // const initialNodes = [
 //   { id: 'id1',type: 'customNode', position: { x: 100, y: 0 }, data: { label: 'input a' }},
@@ -54,7 +55,7 @@ import FlowDiagram from './components/Diagram';
 const initialNodes = [
   {
     id: '0',
-    data: { label: 'Start' },
+    data: { label: 'Start',handlerTypes:{top:"target",bottom:"source",left:"target",right:"target"} },
     position: { x: 0, y: 50 },
     type:"customNode"
   },
