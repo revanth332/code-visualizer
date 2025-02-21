@@ -24,7 +24,7 @@ const getId = () => `${id++}`;
 
 const nodeTypes = { customNode: CustomNode };
 
-function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGeneration}) {
+function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGeneration,focusedArea,setFocusedArea}) {
   const reactFlowWrapper = useRef(null);
   const { screenToFlowPosition,setNodes } = useReactFlow();
   const [isLoading,setIsLoading] = useState(false);
@@ -81,7 +81,7 @@ function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGen
   }
 
   return (
-    <div ref={reactFlowWrapper} className='h-full w-full bg-code-bg'>
+    <div onClick={() => setFocusedArea("flow")} ref={reactFlowWrapper} className='h-full w-full bg-code-bg'>
       <div className='h-[92%]'>
         <ReactFlow
             nodes={nodes}
@@ -99,15 +99,24 @@ function Diagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGen
           </ReactFlow>
       </div> 
       <div className='flex justify-end items-center h-[8%]'>
-        <button onClick={handleSubmit} className='p-2 rounded-lg bg-green-600 text-white cursor-pointer min-w-[130px] flex justify-center'>{ isLoading ? <Loader2 className="animate-spin" /> : "Submit" }</button>
-      </div>
+        {
+          focusedArea === "flow" &&       
+          (
+            isLoading
+          ? <button disabled={isLoading} className='p-2 disabled:cursor-not-allowed rounded-lg bg-green-600/60 text-white cursor-pointer min-w-[130px] flex justify-center'><Loader2 className="animate-spin" /> </button>
+          : <button onClick={handleSubmit} className='p-2 rounded-lg bg-green-600 text-white cursor-pointer min-w-[130px] flex justify-center'>Generate Code</button>
+          )
+        }
+          </div>
     </div>
 
   );
 }
 
-export default function FlowDiagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGeneration}) {
+export default function FlowDiagram({nodes,edges,setEdges,onEdgesChange,onNodesChange,handleCodeGeneration,focusedArea,setFocusedArea}) {
   return <ReactFlowProvider>
-    <Diagram edges={edges} nodes={nodes} onNodesChange={onNodesChange} setEdges={setEdges} onEdgesChange={onEdgesChange} handleCodeGeneration={handleCodeGeneration} />
+    <Diagram focusedArea={focusedArea} setFocusedArea={setFocusedArea} edges={edges} nodes={nodes} onNodesChange={onNodesChange} setEdges={setEdges} onEdgesChange={onEdgesChange} handleCodeGeneration={handleCodeGeneration} />
   </ReactFlowProvider>
 };
+
+  

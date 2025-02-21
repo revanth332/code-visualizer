@@ -67,6 +67,7 @@ export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [language,setLanguage] = useState("javascript");
+  const [focusedArea,setFocusedArea] = useState("code");  // "code" || "flow"
 
   const handleFlowDiagramGeneration = async (code) => {
     console.log("click",nodes,edges)
@@ -87,7 +88,7 @@ export default function App() {
     try{
       const response = await axios.post("http://localhost:3000/generateCode",{flowDiagramData:{nodes,edges,language}});
       console.log(response);
-      setCode(response.data.code);  
+      // setCode(response.data.code);  
     }
     catch(err){
       console.log(err);
@@ -100,10 +101,10 @@ export default function App() {
         <Navbar />
       </div>
       <div className='row-span-11 col-span-5 bg-gray-100'>
-        <CodeEditor language={language} setLanguage={setLanguage} handleFlowDiagramGeneration={handleFlowDiagramGeneration} code={code} setCode={setCode} />
+        <CodeEditor focusedArea={focusedArea} setFocusedArea={setFocusedArea} language={language} setLanguage={setLanguage} handleFlowDiagramGeneration={handleFlowDiagramGeneration} code={code} setCode={setCode} />
       </div>
       <div className='row-span-11 col-span-7 bg-gray-200'>
-        <FlowDiagram edges={edges} nodes={nodes} onNodesChange={onNodesChange} setEdges={setEdges} onEdgesChange={onEdgesChange} handleCodeGeneration={handleCodeGeneration} />
+        <FlowDiagram focusedArea={focusedArea} setFocusedArea={setFocusedArea} edges={edges} nodes={nodes} onNodesChange={onNodesChange} setEdges={setEdges} onEdgesChange={onEdgesChange} handleCodeGeneration={handleCodeGeneration} />
       </div>
     </div>
   )
